@@ -1,0 +1,94 @@
+===============
+simple
+===============
+witness myWitness (x: Field) : Field;
+---
+(source_file
+    (wdecl
+    (function_name)
+    (arg
+        (id)
+        (type))
+    (type)))
+
+===============
+export simple
+===============
+export witness myWitness (x: Field, y: Uint<32>) : Field;
+---
+(source_file
+    (wdecl
+    (export)
+    (function_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type
+        (uint_type
+            (tsize
+            (nat)))))
+    (type)))
+
+===============
+wintess with generic parameter
+===============
+witness myWitness<T> (a: Field) : Field;
+---
+(source_file
+    (wdecl
+    (function_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (arg
+        (id)
+        (type))
+    (type)))
+
+===============
+witness with multiple arguments
+===============
+witness myWitness (a: Field, b: Field, c: Boolean) : Boolean;
+---
+(source_file
+    (wdecl
+    (function_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type))
+    (type)))
+
+===============
+witness with empty argument list
+===============
+witness myWitness () : Field;
+---
+(source_file
+    (wdecl
+    (function_name)
+    (type)))
+
+===============
+witness with vector return type
+===============
+witness myWitness (data: Field) : Vector<10, Field>;
+---
+(source_file
+    (wdecl
+    (function_name)
+    (arg
+        (id)
+        (type))
+    (type
+        (vector_type
+        (tsize
+            (nat))
+        (type)))))

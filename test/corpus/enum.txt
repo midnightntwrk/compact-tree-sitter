@@ -1,0 +1,60 @@
+===============
+simple
+===============
+enum Color { red }
+---
+(source_file
+    (enumdef
+    (enum_name)
+    (id)))
+
+===============
+with trailing semicolon
+===============
+enum Color { red };
+---
+(source_file
+    (enumdef
+    (enum_name)
+    (id)))
+
+===============
+multiple members
+===============
+enum Days { Monday, Tuesday, Wednesday }
+---
+(source_file
+    (enumdef
+    (enum_name)
+    (id)
+    (id)
+    (id)))
+
+===============
+members with trailing comma
+===============
+enum Days { Monday, Tuesday, Wednesday, }
+---
+(source_file
+    (enumdef
+    (enum_name)
+    (id)
+    (id)
+    (id)))
+
+===============
+export
+===============
+export enum Numbers {
+  One,
+  Two,
+  Three
+};
+---
+(source_file
+    (enumdef
+    (export)
+    (enum_name)
+    (id)
+    (id)
+    (id)))

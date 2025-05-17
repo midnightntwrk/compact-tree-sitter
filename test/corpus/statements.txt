@@ -1,0 +1,1021 @@
+===============
+assignment statement (simple)
+===============
+circuit foo(): Bool {
+    x = 42;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (assign_stmt
+            (expr
+            (term
+                (id)))
+            (expr
+            (term
+                (lit
+                (nat)))))))))
+
+===============
+compound assignment statement
+===============
+circuit foo(): Bool {
+    x += y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (assign_stmt
+            (expr
+            (term
+                (id)))
+            (expr
+            (term
+                (id))))))))
+
+===============
+expression statement
+===============
+circuit foo(): Bool {
+    x + y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (bin_sum_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+return statement (no value)
+===============
+circuit foo(): Bool {
+    return;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (return_stmt)))))
+
+===============
+return statement with expression
+===============
+circuit foo(): Bool {
+    return x * y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (bin_mul_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+if statement (no else)
+===============
+circuit foo(): Bool {
+    if (x > 0) x = 1;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (if_stmt
+            (expr_seq
+            (expr
+                (rel_comparison_expr
+                (term
+                    (id))
+                (greater_than)
+                (term
+                    (lit
+                    (nat))))))
+            (stmt
+            (assign_stmt
+                (expr
+                (term
+                    (id)))
+                (expr
+                (term
+                    (lit
+                    (nat)))))))))))
+
+===============
+if-else statement
+===============
+circuit foo(): Bool {
+    if (x > 0) { return x + 1; } else { x = 21; }
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (if_stmt
+            (expr_seq
+            (expr
+                (rel_comparison_expr
+                (term
+                    (id))
+                (greater_than)
+                (term
+                    (lit
+                    (nat))))))
+            (stmt
+            (block
+                (stmt
+                (return_stmt
+                    (expr_seq
+                    (expr
+                        (bin_sum_expr
+                        (term
+                            (id))
+                        (term
+                            (lit
+                            (nat))))))))))
+            (stmt
+            (block
+                (stmt
+                (assign_stmt
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+for statement
+===============
+circuit foo(): Bool {
+    for (const i of 0 .. 10) { x = i; }
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (for_stmt
+            (id)
+            (nat)
+            (nat)
+            (stmt
+            (block
+                (stmt
+                (assign_stmt
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (id))))))))))))
+
+===============
+assert statement with message
+===============
+circuit foo(): Bool {
+    assert x != 0 "Division by zero error";
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (assert_stmt
+            (expr
+            (comparison_expr
+                (term
+                (id))
+                (not_equals)
+                (term
+                (lit
+                    (nat)))))
+            (str))))))
+
+===============
+assert statement without message
+===============
+circuit foo(): Bool {
+    assert x > 0 "fail!";
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (assert_stmt
+            (expr
+            (rel_comparison_expr
+                (term
+                (id))
+                (greater_than)
+                (term
+                (lit
+                    (nat)))))
+            (str))))))
+
+===============
+const declaration with type
+===============
+circuit foo(): Bool {
+    const y: Field = x + 1;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (const_stmt
+            (pattern
+            (id))
+            (type)
+            (expr
+            (bin_sum_expr
+                (term
+                (id))
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+const declaration with destructuring pattern
+===============
+circuit foo(): Bool {
+    const [a, b] = getPair();
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (const_stmt
+            (pattern
+            (pattern_tuple_elt
+                (pattern
+                (id)))
+            (pattern_tuple_elt
+                (pattern
+                (id))))
+            (expr
+            (term
+                (function_call_term
+                (fun
+                    (id))))))))))
+
+===============
+block statement
+===============
+circuit foo(): Bool {
+    {
+        x = 1;
+        return;
+    }
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (block
+            (stmt
+            (assign_stmt
+                (expr
+                (term
+                    (id)))
+                (expr
+                (term
+                    (lit
+                    (nat))))))
+            (stmt
+            (return_stmt)))))))
+
+===============
+boolean literal
+===============
+circuit foo(): Bool {
+    true;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit)))))))))
+
+===============
+numeric literal
+===============
+circuit foo(): Bool {
+    42;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+string literal
+===============
+circuit foo(): Bool {
+    "hello";
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (str))))))))))
+
+===============
+pad expression
+===============
+circuit foo(): Bool {
+    pad(5, "hi");
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (pad
+                    (nat)
+                    (str)))))))))))
+
+===============
+default term
+===============
+circuit foo(): Bool {
+    default<Field>;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (default_term
+                    (type))))))))))
+
+===============
+map term
+===============
+circuit foo(): Bool {
+    map(f, x, y);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (map_term
+                    (fun
+                    (id))
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (id))))))))))))
+
+===============
+fold term
+===============
+circuit foo(): Bool {
+    fold(g, 0, x, y, z);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (fold_term
+                    (fun
+                    (id))
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (id))))))))))))
+
+===============
+function call term (with arguments)
+===============
+circuit foo(): Bool {
+    myFunction(a, b);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (function_call_term
+                    (fun
+                    (id))
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (id))))))))))))
+
+===============
+function call term (no arguments)
+===============
+circuit foo(): Bool {
+    myFunction();
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (function_call_term
+                    (fun
+                    (id)))))))))))
+
+===============
+disclose term
+===============
+circuit foo(): Bool {
+    disclose(x);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (disclose_term
+                    (expr
+                    (term
+                        (id))))))))))))
+
+===============
+struct literal
+===============
+circuit foo(): Bool {
+    MyStruct { a: x, b: y };
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (struct_term
+                    (tref
+                    (id))
+                    (struct_arg
+                    (struct_named_filed_initializer
+                        (id)
+                        (expr
+                        (term
+                            (id)))))
+                    (struct_arg
+                    (struct_named_filed_initializer
+                        (id)
+                        (expr
+                        (term
+                            (id))))))))))))))
+
+===============
+array literal
+===============
+circuit foo(): Bool {
+    [x, y, z];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (expr
+                    (term
+                    (id)))
+                (expr
+                    (term
+                    (id)))
+                (expr
+                    (term
+                    (id)))))))))))
+
+===============
+parenthesized expression sequence
+===============
+circuit foo(): Bool {
+    ((x+1), y, z);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (expr_seq_term
+                    (expr_seq
+                    (expr
+                        (term
+                        (expr_seq_term
+                            (expr_seq
+                            (expr
+                                (bin_sum_expr
+                                (term
+                                    (id))
+                                (term
+                                    (lit
+                                    (nat)))))))))
+                    (expr
+                        (term
+                        (id)))
+                    (expr
+                        (term
+                        (id)))))))))))))
+
+===============
+conditional expression
+===============
+circuit foo(): Bool {
+    x > 0 ? x : 10 * x;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (conditional_expr
+                (rel_comparison_expr
+                    (term
+                    (id))
+                    (greater_than)
+                    (term
+                    (lit
+                        (nat))))
+                (expr
+                    (term
+                    (id)))
+                (expr
+                    (bin_mul_expr
+                    (term
+                        (lit
+                        (nat)))
+                    (term
+                        (id))))))))))))
+
+===============
+logical OR expression
+===============
+circuit foo(): Bool {
+    x || y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (or_expr
+                (term
+                    (id))
+                (or)
+                (term
+                    (id))))))))))
+
+===============
+logical AND expression
+===============
+circuit foo(): Bool {
+    x && y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (and_expr
+                (term
+                    (id))
+                (and)
+                (term
+                    (id))))))))))
+
+===============
+comparison expression
+===============
+circuit foo(): Bool {
+    x == y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (comparison_expr
+                (term
+                    (id))
+                (equals)
+                (term
+                    (id))))))))))
+
+===============
+arithmetic expression (addition)
+===============
+circuit foo(): Bool {
+    x + y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (bin_sum_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+arithmetic expression (subtraction)
+===============
+circuit foo(): Bool {
+    x - y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (bin_sum_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+arithmetic expression (multiplication)
+===============
+circuit foo(): Bool {
+    x * y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (bin_mul_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+unary expression
+===============
+circuit foo(): Bool {
+    !x;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (not_expr
+                (not)
+                (term
+                    (id))))))))))
+
+===============
+member access expression (property)
+===============
+circuit foo(): Bool {
+    x.y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (member_access_expr
+                (term
+                    (id))
+                (id)))))))))
+
+===============
+member access expression (method call)
+===============
+circuit foo(): Bool {
+    x.y(z);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (member_access_expr
+                (term
+                    (id))
+                (id)
+                (expr
+                    (term
+                    (id)))))))))))
+
+===============
+array indexing expression
+===============
+circuit foo(): Bool {
+    x[0];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (index_access_expr
+                (term
+                    (id))
+                (nat)))))))))
+
+===============
+type cast expression
+===============
+circuit foo(): Bool {
+    x as Field;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (cast_expr
+                (term
+                    (id))
+                (type)))))))))
