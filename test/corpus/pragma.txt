@@ -1,13 +1,123 @@
 ===============
-lang version
+pragma version exact
 ===============
-
-pragma language_version >= 0.14.0;
-
+pragma language_version 0.14.0;
 ---
+(source_file
+    (pragma
+        (id)
+        (version)))
 
+===============
+pragma version not
+===============
+pragma language_version !0.14.0;
+---
+(source_file
+    (pragma
+        (id)
+        (not)
+        (version)))
+
+===============
+pragma version lt
+===============
+pragma language_version <0.14.0;
+---
+(source_file
+    (pragma
+        (id)
+        (less_than)
+        (version)))
+
+===============
+pragma version lte
+===============
+pragma language_version <=0.14.0;
+---
+(source_file
+    (pragma
+        (id)
+        (less_than_or_equal)
+        (version)))
+
+===============
+pragma version gt
+===============
+pragma language_version >0.14.0;
+---
+(source_file
+    (pragma
+        (id)
+        (greater_than)
+        (version)))
+
+===============
+pragma version gte
+===============
+pragma language_version >=0.14.0;
+---
 (source_file
     (pragma
         (id)
         (greater_than_or_equal)
+        (version)))
+
+===============
+pragma version paranthesized
+===============
+pragma language_version (0.14.0);
+---
+(source_file
+    (pragma
+        (id)
+        (version)))
+
+===============
+pragma version paranthesized not
+===============
+pragma language_version (!0.14.0);
+---
+(source_file
+    (pragma
+        (id)
+        (not)
+        (version)))
+
+===============
+pragma version and
+===============
+pragma language_version 0.14.0 && 0.15.0;
+---
+(source_file
+    (pragma
+        (id)
+        (version)
+        (and)
+        (version)))
+
+===============
+pragma version or
+===============
+pragma language_version 0.14.0 || 0.15.0;
+---
+(source_file
+    (pragma
+        (id)
+        (version)
+        (or)
+        (version)))
+
+===============
+pragma version and or
+===============
+pragma language_version 0.14.0 && 0.15.0 || 0.16.0;
+---
+(source_file
+    (pragma
+        (id)
+        (version)
+        (and)
+        (version)
+        (or)
         (version)))

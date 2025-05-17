@@ -1,0 +1,77 @@
+===============
+ledger id type
+===============
+ledger myLedger : Field;
+---
+(source_file
+    (ldecl
+    (id)
+    (type)))
+
+===============
+export ledger id type
+===============
+export ledger myLedger : Boolean;
+---
+(source_file
+    (ldecl
+    (export)
+    (id)
+    (type)))
+
+===============
+sealed ledger id type
+===============
+sealed ledger myLedger : Uint<32>;
+---
+(source_file
+    (ldecl
+    (sealed)
+    (id)
+    (type
+        (uint_type
+        (tsize
+            (nat))))))
+
+===============
+export sealed ledger id type
+===============
+export sealed ledger myLedger : Field;
+---
+(source_file
+    (ldecl
+    (export)
+    (sealed)
+    (id)
+    (type)))
+
+===============
+ledger id type with size
+===============
+ledger myLedger : Vector<10, Boolean>;
+---
+(source_file
+    (ldecl
+    (id)
+    (type
+        (vector_type
+        (tsize
+            (nat))
+        (type)))))
+
+===============
+ledger id type with size and field
+===============
+ledger myLedger : MyType<42, Field>;
+---
+(source_file
+    (ldecl
+    (id)
+    (type
+        (tref
+        (id)
+        (gargs
+            (garg
+            (nat))
+            (garg
+            (type)))))))

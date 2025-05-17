@@ -1,0 +1,50 @@
+===============
+export id
+===============
+export { foo }
+---
+(source_file
+    (xdecl
+    (id)))
+
+===============
+export id trailing semicolon
+===============
+export { foo };
+---
+(source_file
+    (xdecl
+    (id)))
+
+===============
+export 3 ids
+===============
+export { foo, bar, baz }
+---
+(source_file
+    (xdecl
+    (id)
+    (id)
+    (id)))
+
+===============
+export 3 ids trailing comma
+===============
+export { foo, bar, baz, }
+---
+(source_file
+    (xdecl
+    (id)
+    (id)
+    (id)))
+
+===============
+export 3 ids trailing comma and semicolon
+===============
+export { foo, bar, baz, };
+---
+(source_file
+    (xdecl
+    (id)
+    (id)
+    (id)))

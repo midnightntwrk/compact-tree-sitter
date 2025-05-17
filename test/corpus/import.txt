@@ -1,0 +1,136 @@
+===============
+import file
+===============
+import "test/corpus/import.txt";
+---
+(source_file
+      (idecl
+        (import_name
+          (file))))
+
+===============
+import id
+===============
+import id;
+---
+(source_file
+      (idecl
+        (import_name
+          (id))))
+
+===============
+import file gargs
+===============
+import "test/corpus/import.txt"<1>;
+---
+(source_file
+    (idecl
+    (import_name
+        (file))
+    (gargs
+        (garg
+        (nat)))))
+
+===============
+import id gargs
+===============
+import id<1>;
+---
+(source_file
+    (idecl
+    (import_name
+        (id))
+    (gargs
+        (garg
+        (nat)))))
+
+===============
+import id gargs2
+===============
+import myModule <42, Boolean>;
+---
+(source_file
+    (idecl
+    (import_name
+        (id))
+    (gargs
+        (garg
+        (nat))
+        (garg
+        (type)))))
+
+===============
+import id gargs2 trailing comma
+===============
+import myModule <42, Boolean,>;
+---
+(source_file
+    (idecl
+    (import_name
+        (id))
+    (gargs
+        (garg
+        (nat))
+        (garg
+        (type)))))
+
+===============
+import id prefix
+===============
+import myModule prefix helper;
+---
+(source_file
+    (idecl
+    (import_name
+        (id))
+    (prefix
+        (id))))
+
+===============
+import id prefix gargs
+===============
+import myModule <42, Field> prefix helper;
+---
+(source_file
+    (idecl
+    (import_name
+        (id))
+    (gargs
+        (garg
+        (nat))
+        (garg
+        (type)))
+    (prefix
+        (id))))
+
+===============
+import file prefix gargs2
+===============
+import "path/to/module"<100, Uint<1>> prefix myPrefix;
+---
+(source_file
+    (idecl
+    (import_name
+        (file))
+    (gargs
+        (garg
+        (nat))
+        (garg
+        (type
+            (uint_type
+            (tsize
+                (nat))))))
+    (prefix
+        (id))))
+
+===============
+import file prefix
+===============
+import "module/file" prefix myHelper;
+---
+(source_file
+    (idecl
+    (import_name
+        (file))
+    (prefix
+        (id))))

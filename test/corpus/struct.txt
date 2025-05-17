@@ -1,0 +1,84 @@
+===============
+simple
+===============
+struct MyStruct {
+  a: Field;
+  b: Uint<32>;
+}
+---
+(source_file
+    (struct
+    (struct_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type
+        (uint_type
+            (tsize
+            (nat)))))))
+
+===============
+with trailing semicolon
+===============
+struct MyStruct {
+  a: Field;
+  b: Uint<32>;
+};
+---
+(source_file
+    (struct
+    (struct_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type
+        (uint_type
+            (tsize
+            (nat)))))))
+
+===============
+with generic parameter
+===============
+struct MyStruct<T> {
+  a: Field;
+  b: Uint<32>;
+}
+---
+(source_file
+    (struct
+    (struct_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type
+        (uint_type
+            (tsize
+            (nat)))))))
+
+===============
+export struct
+===============
+export struct MyStruct {
+  a: Field;
+  b: Field;
+}
+---
+(source_file
+    (struct
+    (export)
+    (struct_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type))))

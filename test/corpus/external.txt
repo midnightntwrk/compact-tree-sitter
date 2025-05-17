@@ -1,0 +1,84 @@
+===============
+simple
+===============
+circuit add (x: Field) : Field;
+---
+(source_file
+    (edecl
+    (function_name)
+    (arg
+        (id)
+        (type))
+    (type)))
+
+===============
+external declaration with export modifier
+===============
+export circuit multiply (a: Field, b: Field) : Field;
+---
+(source_file
+    (edecl
+    (export)
+    (function_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type))
+    (type)))
+
+===============
+external declaration with generic parameters
+===============
+circuit process<T> (data: Field) : Field;
+---
+(source_file
+    (edecl
+    (function_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (arg
+        (id)
+        (type))
+    (type)))
+
+===============
+multiple arguments
+===============
+circuit compute (x: Field, y: Field, z: Uint<32>) : Field;
+---
+(source_file
+    (edecl
+    (function_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type
+        (uint_type
+            (tsize
+            (nat)))))
+    (type)))
+
+===============
+vector return type
+===============
+circuit build (a: Field) : Vector<10, Field>;
+---
+(source_file
+    (edecl
+    (function_name)
+    (arg
+        (id)
+        (type))
+    (type
+        (vector_type
+        (tsize
+            (nat))
+        (type)))))

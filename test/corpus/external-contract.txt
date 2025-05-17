@@ -1,0 +1,97 @@
+===============
+simple
+===============
+contract MyContract {
+  circuit foo (x: Field) : Field;
+}
+---
+(source_file
+    (ecdecl
+    (contract_name)
+    (ecdecl_circuit
+        (id)
+        (arg
+        (id)
+        (type))
+        (type))))
+
+===============
+export simple
+===============
+export contract MyContract {
+  circuit foo (x: Field) : Field;
+}
+---
+(source_file
+    (ecdecl
+    (export)
+    (contract_name)
+    (ecdecl_circuit
+        (id)
+        (arg
+        (id)
+        (type))
+        (type))))
+
+===============
+contract with multiple circuits
+===============
+contract MyContract {
+  circuit foo (x: Field) : Field;
+  pure circuit bar (a: Field, b: Uint<32>) : Field;
+}
+---
+(source_file
+    (ecdecl
+    (contract_name)
+    (ecdecl_circuit
+        (id)
+        (arg
+        (id)
+        (type))
+        (type))
+    (ecdecl_circuit
+        (pure)
+        (id)
+        (arg
+        (id)
+        (type))
+        (arg
+        (id)
+        (type
+            (uint_type
+            (tsize
+                (nat)))))
+        (type))))
+
+===============
+with trailing semicolon
+===============
+export contract MyContract {
+  circuit foo (x: Field) : Field;
+  pure circuit bar (a: Field, b: Uint<32>) : Field;
+};
+---
+(source_file
+    (ecdecl
+    (export)
+    (contract_name)
+    (ecdecl_circuit
+        (id)
+        (arg
+        (id)
+        (type))
+        (type))
+    (ecdecl_circuit
+        (pure)
+        (id)
+        (arg
+        (id)
+        (type))
+        (arg
+        (id)
+        (type
+            (uint_type
+            (tsize
+                (nat)))))
+        (type))))

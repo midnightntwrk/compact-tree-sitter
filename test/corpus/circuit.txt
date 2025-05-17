@@ -1,0 +1,149 @@
+===============
+simple
+===============
+circuit add (x: Field, y: Field) : Field {
+  return x + y;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type))
+    (parg
+        (pattern
+        (id))
+        (type))
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (bin_sum_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+export simple circuit
+===============
+export circuit multiply (a: Field, b: Field) : Field {
+  return a * b;
+}
+---
+(source_file
+    (cdefn
+    (export)
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type))
+    (parg
+        (pattern
+        (id))
+        (type))
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (bin_mul_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+pure circuit
+===============
+pure circuit subtract (a: Field, b: Field) : Field {
+  return a - b;
+}
+---
+(source_file
+    (cdefn
+    (pure)
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type))
+    (parg
+        (pattern
+        (id))
+        (type))
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (bin_sum_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+export pure circuit
+===============
+export pure circuit divide(a: Field, b: Field) : Field {
+  return a * b;
+}
+---
+(source_file
+    (cdefn
+    (export)
+    (pure)
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type))
+    (parg
+        (pattern
+        (id))
+        (type))
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (bin_mul_expr
+                (term
+                    (id))
+                (term
+                    (id))))))))))
+
+===============
+circuit with generic parameters
+===============
+circuit process<T> (data: Field) : Field {
+  return data;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (parg
+        (pattern
+        (id))
+        (type))
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (id)))))))))
