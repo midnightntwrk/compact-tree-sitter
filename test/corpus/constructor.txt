@@ -1,0 +1,142 @@
+===============
+empty constructor
+===============
+constructor () {
+}
+---
+(source_file
+    (lconstructor
+    (block)))
+
+===============
+constructor with one parameter and a simple block
+===============
+constructor (x: Field) {
+  // Empty block
+}
+---
+(source_file
+    (lconstructor
+    (parg
+        (pattern
+        (id))
+        (type))
+    (block
+        (comment))))
+
+===============
+constructor with two parameters and a block with a simple statement
+===============
+constructor (x: Field, y: Uint<32>) {
+  x = 0;
+}
+---
+(source_file
+    (lconstructor
+    (parg
+        (pattern
+        (id))
+        (type))
+    (parg
+        (pattern
+        (id))
+        (type
+        (uint_type
+            (tsize
+            (nat)))))
+    (block
+        (stmt
+        (assign_stmt
+            (expr
+            (term
+                (id)))
+            (expr
+            (term
+                (lit
+                (nat)))))))))
+
+===============
+constructor with two parameters and trailing comma
+===============
+constructor (x: Field, y: Uint<32>,) {
+  x = 0;
+}
+---
+(source_file
+    (lconstructor
+    (parg
+        (pattern
+        (id))
+        (type))
+    (parg
+        (pattern
+        (id))
+        (type
+        (uint_type
+            (tsize
+            (nat)))))
+    (block
+        (stmt
+        (assign_stmt
+            (expr
+            (term
+                (id)))
+            (expr
+            (term
+                (lit
+                (nat)))))))))
+
+===============
+constructor with two parameters and a block with if statement
+===============
+constructor (
+  x: Field,
+  y: Uint<32>
+) {
+  if (x == 0) {
+    return;
+  } else {
+    y += 1;
+  }
+}
+---
+(source_file
+    (lconstructor
+    (parg
+        (pattern
+        (id))
+        (type))
+    (parg
+        (pattern
+        (id))
+        (type
+        (uint_type
+            (tsize
+            (nat)))))
+    (block
+        (stmt
+        (if_stmt
+            (expr_seq
+            (expr
+                (comparison_expr
+                (term
+                    (id))
+                (equals)
+                (term
+                    (lit
+                    (nat))))))
+            (stmt
+            (block
+                (stmt
+                (return_stmt))))
+            (stmt
+            (block
+                (stmt
+                (assign_stmt
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))

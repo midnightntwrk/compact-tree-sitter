@@ -110,7 +110,7 @@
 (pragma (id) @property)
 (import_name (id) @namespace)
 (gargs (_) @type.parameter)
-(struct_arg (id) @field)
+(struct_named_filed_initializer (id) @field)
 (pattern_struct_elt (id) @field)
 (term (expr "." (id) @function.call (expr) @parameter))
 
