@@ -331,11 +331,11 @@ module.exports = grammar({
 
     // { arg ; … ; arg ;^opt }
     _struct_body_semicolon: ($) =>
-      seq("{", repeat(seq(field("arg", $.arg), ";")), optional(";"), "}"),
+      seq("{", field("arg", $.arg), repeat(seq(";", field("arg", $.arg))), optional(";"), "}"),
 
     // { arg , … , arg ,^opt }
     _struct_body_comma: ($) =>
-      prec(1, seq("{", repeat(seq(field("arg", $.arg), ",")), optional(","), "}")),
+      prec(1, seq("{", commaSep1(field("arg", $.arg)), "}")),
 
     // Enum-definition (enumdef)
     //
@@ -442,7 +442,7 @@ module.exports = grammar({
         ),
       ),
     
-      assert_stmt: ($) => seq("assert", field("condition", $.expr), field("message", $.str), ";"),
+      assert_stmt: ($) => seq("assert", "(", field("condition", $.expr), ",", field("message", $.str), ")", ";"),
       return_stmt: ($) => seq("return", optional(field("value", $.expr_seq)), ";"),
       if_stmt: ($) => prec.right(seq("if", "(", field("condition", $.expr_seq), ")", field("then_branch", $.stmt), optional(seq("else", field("else_branch", $.stmt))))),
       for_stmt: ($) => seq("for", "(", "const", field("counter", $.id), "of", 
@@ -731,7 +731,7 @@ module.exports = grammar({
     // string-literal (str, file)
     //
     // The basic string-literal rule that matches TypeScript strings
-    str: ($) => token(/"[^"]*"/),
+    str: ($) => token(choice(/"[^"]*"/, /'[^']*'/)),
     file: ($) => token(/"[^"]*"/),
 
     // version-literal (version)

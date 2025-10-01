@@ -1050,11 +1050,6 @@
     }
   },
   {
-    "type": "file",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "fold_term",
     "named": true,
     "fields": {
@@ -2430,17 +2425,12 @@
     }
   },
   {
-    "type": "str",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "struct",
     "named": true,
     "fields": {
       "arg": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "arg",
@@ -3021,6 +3011,10 @@
     "named": false
   },
   {
+    "type": "file",
+    "named": true
+  },
+  {
     "type": "fold",
     "named": false
   },
@@ -3098,6 +3092,10 @@
   },
   {
     "type": "sealed",
+    "named": true
+  },
+  {
+    "type": "str",
     "named": true
   },
   {
