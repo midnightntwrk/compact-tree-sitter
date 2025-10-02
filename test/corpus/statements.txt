@@ -228,7 +228,7 @@ circuit foo(): Bool {
 assert statement with message
 ===============
 circuit foo(): Bool {
-    assert x != 0 "Division by zero error";
+    assert(x != 0, "Division by zero error");
 }
 ---
 (source_file
@@ -254,7 +254,7 @@ circuit foo(): Bool {
 assert statement without message
 ===============
 circuit foo(): Bool {
-    assert x > 0 "fail!";
+    assert(x > 0, "fail!");
 }
 ---
 (source_file
