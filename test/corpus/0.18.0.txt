@@ -1,0 +1,779 @@
+===============
+hexadecimal literal lowercase x
+===============
+circuit foo(): Field {
+    return 0xff;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+hexadecimal literal uppercase X
+===============
+circuit foo(): Field {
+    return 0XFF;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+hexadecimal literal mixed case
+===============
+circuit foo(): Field {
+    return 0xAbCd;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+octal literal lowercase o
+===============
+circuit foo(): Field {
+    return 0o77;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+octal literal uppercase O
+===============
+circuit foo(): Field {
+    return 0O755;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+binary literal lowercase b
+===============
+circuit foo(): Field {
+    return 0b1010;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+binary literal uppercase B
+===============
+circuit foo(): Field {
+    return 0B11110000;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type)
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+bytes literal with elements
+===============
+circuit foo(): Bytes<4> {
+    return Bytes[0, 1, 2, 3];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (bytes_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (bytes_literal
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+bytes literal empty
+===============
+circuit foo(): Bytes<0> {
+    return Bytes[];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (bytes_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (bytes_literal)))))))))
+
+===============
+bytes literal with hex values
+===============
+circuit foo(): Bytes<3> {
+    return Bytes[0xff, 0x00, 0xab];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (bytes_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (bytes_literal
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+bytes indexing with literal
+===============
+circuit foo(b: Bytes<10>): Uint<8> {
+    return b[0];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (bytes_type
+            (tsize
+            (nat)))))
+    (type
+        (uint_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (index_access_expr
+                (term
+                    (id))
+                (expr
+                    (term
+                    (lit
+                        (nat))))))))))))
+
+===============
+bytes indexing with variable
+===============
+circuit foo(b: Bytes<10>, i: Uint<8>): Uint<8> {
+    return b[i];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (bytes_type
+            (tsize
+            (nat)))))
+    (parg
+        (pattern
+        (id))
+        (type
+        (uint_type
+            (tsize
+            (nat)))))
+    (type
+        (uint_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (index_access_expr
+                (term
+                    (id))
+                (expr
+                    (term
+                    (id)))))))))))
+
+===============
+spread in array literal
+===============
+circuit foo(x: [Field, Field], y: [Field, Field]): [Field, Field, Field, Field] {
+    return [...x, ...y];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (type)
+        (type)))
+    (parg
+        (pattern
+        (id))
+        (type
+        (type)
+        (type)))
+    (type
+        (type)
+        (type)
+        (type)
+        (type))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (array_literal
+                    (spread_element
+                    (expr
+                        (term
+                        (id))))
+                    (spread_element
+                    (expr
+                        (term
+                        (id)))))))))))))
+
+===============
+spread mixed with elements in array
+===============
+circuit foo(x: [Field, Field]): [Field, Field, Field, Field] {
+    return [1, ...x, 2];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (type)
+        (type)))
+    (type
+        (type)
+        (type)
+        (type)
+        (type))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (array_literal
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (spread_element
+                    (expr
+                        (term
+                        (id))))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+spread in bytes literal
+===============
+circuit foo(x: Bytes<2>): Bytes<4> {
+    return Bytes[...x, ...x];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (bytes_type
+            (tsize
+            (nat)))))
+    (type
+        (bytes_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (bytes_literal
+                    (spread_element
+                    (expr
+                        (term
+                        (id))))
+                    (spread_element
+                    (expr
+                        (term
+                        (id)))))))))))))
+
+===============
+spread mixed in bytes literal
+===============
+circuit foo(x: Bytes<2>): Bytes<4> {
+    return Bytes[0, ...x, 255];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (bytes_type
+            (tsize
+            (nat)))))
+    (type
+        (bytes_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (bytes_literal
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (spread_element
+                    (expr
+                        (term
+                        (id))))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+slice expression with literal size and index
+===============
+circuit foo(v: Vector<10, Uint<8>>): Vector<4, Uint<8>> {
+    return slice<4>(v, 2);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (vector_type
+            (tsize
+            (nat))
+            (type
+            (uint_type
+                (tsize
+                (nat)))))))
+    (type
+        (vector_type
+        (tsize
+            (nat))
+        (type
+            (uint_type
+            (tsize
+                (nat))))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (slice_term
+                    (tsize
+                    (nat))
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+slice expression with generic size parameter
+===============
+circuit foo<#N>(v: Vector<10, Uint<8>>): Vector<N, Uint<8>> {
+    return slice<N>(v, 0);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (parg
+        (pattern
+        (id))
+        (type
+        (vector_type
+            (tsize
+            (nat))
+            (type
+            (uint_type
+                (tsize
+                (nat)))))))
+    (type
+        (vector_type
+        (tsize
+            (id))
+        (type
+            (uint_type
+            (tsize
+                (nat))))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (slice_term
+                    (tsize
+                    (id))
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+slice expression with variable index
+===============
+circuit foo(v: Vector<10, Uint<8>>, i: Uint<8>): Vector<4, Uint<8>> {
+    return slice<4>(v, i);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (vector_type
+            (tsize
+            (nat))
+            (type
+            (uint_type
+                (tsize
+                (nat)))))))
+    (parg
+        (pattern
+        (id))
+        (type
+        (uint_type
+            (tsize
+            (nat)))))
+    (type
+        (vector_type
+        (tsize
+            (nat))
+        (type
+            (uint_type
+            (tsize
+                (nat))))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (slice_term
+                    (tsize
+                    (nat))
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (id))))))))))))
+
+===============
+slice expression on bytes
+===============
+circuit foo(b: Bytes<10>): Bytes<3> {
+    return slice<3>(b, 5);
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (bytes_type
+            (tsize
+            (nat)))))
+    (type
+        (bytes_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (slice_term
+                    (tsize
+                    (nat))
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+vector indexing with expression
+===============
+circuit foo(v: Vector<10, Uint<8>>): Uint<8> {
+    const i = 4;
+    return v[2 * i];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (vector_type
+            (tsize
+            (nat))
+            (type
+            (uint_type
+                (tsize
+                (nat)))))))
+    (type
+        (uint_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (const_stmt
+            (pattern
+            (id))
+            (expr
+            (term
+                (lit
+                (nat))))))
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (index_access_expr
+                (term
+                    (id))
+                (expr
+                    (bin_mul_expr
+                    (term
+                        (lit
+                        (nat)))
+                    (term
+                        (id))))))))))))
+
+===============
+combined features - bytes with hex and spread
+===============
+circuit foo(x: Bytes<2>): Bytes<5> {
+    return Bytes[0xff, ...x, 0x00, 0xab];
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (parg
+        (pattern
+        (id))
+        (type
+        (bytes_type
+            (tsize
+            (nat)))))
+    (type
+        (bytes_type
+        (tsize
+            (nat))))
+    (block
+        (stmt
+        (return_stmt
+            (expr_seq
+            (expr
+                (term
+                (bytes_literal
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (spread_element
+                    (expr
+                        (term
+                        (id))))
+                    (expr
+                    (term
+                        (lit
+                        (nat))))
+                    (expr
+                    (term
+                        (lit
+                        (nat)))))))))))))
+
+===============
+for loop with range using hex
+===============
+circuit foo(): Field {
+    for (const i of 0x0 .. 0xa) {
+        x = i;
+    }
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type)
+    (block
+        (stmt
+        (for_stmt
+            (id)
+            (nat)
+            (nat)
+            (stmt
+            (block
+                (stmt
+                (assign_stmt
+                    (expr
+                    (term
+                        (id)))
+                    (expr
+                    (term
+                        (id))))))))))))

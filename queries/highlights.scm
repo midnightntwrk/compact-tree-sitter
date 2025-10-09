@@ -112,7 +112,7 @@
 (gargs (_) @type.parameter)
 (struct_named_filed_initializer (id) @field)
 (pattern_struct_elt (id) @field)
-(term (expr "." (id) @function.call (expr) @parameter))
+(member_access_expr (id) @function.call)
 
 ; Function Definitions and Calls
 (cdefn (function_name) @function)

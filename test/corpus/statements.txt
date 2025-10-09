@@ -669,15 +669,16 @@ circuit foo(): Bool {
             (expr_seq
             (expr
                 (term
-                (expr
+                (array_literal
+                    (expr
                     (term
-                    (id)))
-                (expr
+                        (id)))
+                    (expr
                     (term
-                    (id)))
-                (expr
+                        (id)))
+                    (expr
                     (term
-                    (id)))))))))))
+                        (id))))))))))))
 
 ===============
 parenthesized expression sequence
@@ -995,7 +996,10 @@ circuit foo(): Bool {
                 (index_access_expr
                 (term
                     (id))
-                (nat)))))))))
+                (expr
+                    (term
+                    (lit
+                        (nat))))))))))))
 
 ===============
 type cast expression

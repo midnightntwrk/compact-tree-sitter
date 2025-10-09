@@ -32,6 +32,7 @@ module.exports = grammar({
     [$.pattern, $.term],
     [$.fun, $.term],
     [$.fun, $.pattern],
+    [$.pattern, $.array_literal],
   ],
 
   extras: ($) => [
@@ -584,11 +585,11 @@ module.exports = grammar({
 
     // Expression8 (expr8)
     //
-    // expr8 → expr8 [ nat ]
+    // expr8 → expr8 [ expr ]
     //       → expr8 . id
     //       → expr8 . id ( expr , … , expr )
     //       → term
-    index_access_expr: ($) => prec.left(seq(field("base", $._expr8), "[", field("index", $.nat), "]")),
+    index_access_expr: ($) => prec.left(seq(field("base", $._expr8), "[", field("index", $.expr), "]")),
     member_access_expr: ($) => prec.left(seq(field("base", $._expr8), ".", field("member", $.id), optional(field("arguments", seq("(", commaSep(field("expr", $.expr)), ")"))))),
     _expr8: ($) =>
       prec.left(
@@ -609,6 +610,7 @@ module.exports = grammar({
     //      → disclose ( expr )
     //      → tref { struct-arg , … , struct-arg }
     //      → [ expr , … , expr ,opt ]
+    //      → Bytes [ expr , … , expr ,opt ]
     //      → id
     //      → ( expr-seq )
     term: ($) =>
@@ -620,7 +622,9 @@ module.exports = grammar({
         $.function_call_term, // Function call with zero or more expressions
         $.disclose_term, // Disclose with single expression
         $.struct_term, // Struct literal with type reference
-        seq("[", commaSep(field("expr", $.expr)), "]"), // Array literal with optional trailing comma
+        $.array_literal, // Array literal with optional trailing comma
+        $.bytes_literal, // Bytes literal
+        $.slice_term, // Slice expression
         $.id, // Identifier
         $.expr_seq_term, // Parenthesized expression sequence
       ),
@@ -631,6 +635,10 @@ module.exports = grammar({
       struct_term: ($) => seq(field("tref", $.tref), "{", commaSep($.struct_arg), "}"),
       function_call_term: ($) => seq(field("fun", $.fun), "(", commaSep(field("expr", $.expr)), ")"),
       disclose_term : ($) => seq("disclose", "(", field("expr", $.expr), ")"),
+      array_literal: ($) => seq("[", commaSep(field("element", choice($.expr, $.spread_element))), "]"),
+      bytes_literal: ($) => seq("Bytes", "[", commaSep(field("element", choice($.expr, $.spread_element))), "]"),
+      spread_element: ($) => seq("...", field("expr", $.expr)),
+      slice_term: ($) => seq("slice", "<", field("size", $.tsize), ">", "(", field("value", $.expr), ",", field("index", $.expr), ")"),
       expr_seq_term: ($) => seq("(", $.expr_seq, ")"),
 
     // Literal (lit)
@@ -726,7 +734,14 @@ module.exports = grammar({
     // a field literal is 0 or a natural number formed from a sequence
     // of digits starting with 1-9, e.g. 723, whose value does not exceed
     // the maximum field value
-    nat: ($) => choice("0", /[1-9][0-9]*/),
+    // Also supports hexadecimal (0x/0X), octal (0o/0O), and binary (0b/0B) literals
+    nat: ($) => choice(
+      "0",
+      /[1-9][0-9]*/,        // decimal
+      /0[xX][0-9a-fA-F]+/,  // hexadecimal
+      /0[oO][0-7]+/,        // octal
+      /0[bB][01]+/          // binary
+    ),
 
     // string-literal (str, file)
     //

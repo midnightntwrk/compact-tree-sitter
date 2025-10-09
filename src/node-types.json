@@ -130,6 +130,26 @@
     }
   },
   {
+    "type": "array_literal",
+    "named": true,
+    "fields": {
+      "element": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          },
+          {
+            "type": "spread_element",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "assert_stmt",
     "named": true,
     "fields": {
@@ -349,6 +369,26 @@
         "types": [
           {
             "type": "stmt",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "bytes_literal",
+    "named": true,
+    "fields": {
+      "element": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          },
+          {
+            "type": "spread_element",
             "named": true
           }
         ]
@@ -1472,7 +1512,7 @@
         "required": true,
         "types": [
           {
-            "type": "nat",
+            "type": "expr",
             "named": true
           }
         ]
@@ -2318,6 +2358,42 @@
     }
   },
   {
+    "type": "slice_term",
+    "named": true,
+    "fields": {
+      "index": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          }
+        ]
+      },
+      "size": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "tsize",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -2379,6 +2455,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "spread_element",
+    "named": true,
+    "fields": {
+      "expr": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2569,22 +2661,19 @@
   {
     "type": "term",
     "named": true,
-    "fields": {
-      "expr": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "expr",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
+        {
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "bytes_literal",
+          "named": true
+        },
         {
           "type": "default_term",
           "named": true
@@ -2615,6 +2704,10 @@
         },
         {
           "type": "map_term",
+          "named": true
+        },
+        {
+          "type": "slice_term",
           "named": true
         },
         {
@@ -3093,6 +3186,10 @@
   {
     "type": "sealed",
     "named": true
+  },
+  {
+    "type": "slice",
+    "named": false
   },
   {
     "type": "str",
