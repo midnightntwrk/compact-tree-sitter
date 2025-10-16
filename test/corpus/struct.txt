@@ -82,3 +82,41 @@ export struct MyStruct {
     (arg
         (id)
         (type))))
+
+===============
+struct without last comma
+===============
+export struct MyStruct {
+  a: Field,
+  b: Field
+}
+---
+(source_file
+    (struct
+    (export)
+    (struct_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type))))
+
+===============
+struct with last comma
+===============
+export struct MyStruct {
+  a: Field,
+  b: Field,
+}
+---
+(source_file
+    (struct
+    (export)
+    (struct_name)
+    (arg
+        (id)
+        (type))
+    (arg
+        (id)
+        (type))))

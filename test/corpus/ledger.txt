@@ -75,3 +75,27 @@ ledger myLedger : MyType<42, Field>;
             (nat))
             (garg
             (type)))))))
+
+===============
+opaque string with "
+===============
+ledger myLedger : Opaque<"string">;
+---
+    (source_file
+      (ldecl
+        (id)
+        (type
+          (opaque_type
+            (str)))))
+
+===============
+opaque string with '
+===============
+ledger myLedger : Opaque<'string'>;
+---
+    (source_file
+      (ldecl
+        (id)
+        (type
+          (opaque_type
+            (str)))))
