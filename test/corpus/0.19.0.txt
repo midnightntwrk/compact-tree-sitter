@@ -1,0 +1,92 @@
+===============
+selective import single
+===============
+import { foo } from ModuleName;
+---
+(source_file
+    (idecl
+        (import_selection
+            (import_element
+                (id)))
+        (import_name
+            (id))))
+
+===============
+selective import multiple
+===============
+import { foo, bar, baz } from ModuleName;
+---
+(source_file
+    (idecl
+        (import_selection
+            (import_element
+                (id))
+            (import_element
+                (id))
+            (import_element
+                (id)))
+        (import_name
+            (id))))
+
+===============
+selective import with alias
+===============
+import { foo as f, bar as b } from ModuleName;
+---
+(source_file
+    (idecl
+        (import_selection
+            (import_element
+                (id)
+                (id))
+            (import_element
+                (id)
+                (id)))
+        (import_name
+            (id))))
+
+===============
+selective import from file
+===============
+import { foo } from "path/to/file";
+---
+(source_file
+    (idecl
+        (import_selection
+            (import_element
+                (id)))
+        (import_name
+            (file))))
+
+===============
+selective import mixed aliases
+===============
+import { foo, bar as myBar, baz } from SomeModule;
+---
+(source_file
+    (idecl
+        (import_selection
+            (import_element
+                (id))
+            (import_element
+                (id)
+                (id))
+            (import_element
+                (id)))
+        (import_name
+            (id))))
+
+===============
+selective import with trailing comma
+===============
+import { foo, bar, } from ModuleName;
+---
+(source_file
+    (idecl
+        (import_selection
+            (import_element
+                (id))
+            (import_element
+                (id)))
+        (import_name
+            (id))))
