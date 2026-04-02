@@ -1,5 +1,5 @@
 ===============
-assignment statement (simple)
+assignment expression
 ===============
 circuit foo(): Bool {
     x = 42;
@@ -13,17 +13,19 @@ circuit foo(): Bool {
         (id)))
     (block
         (stmt
-        (assign_stmt
+        (expression_sequence_stmt
+            (expr_seq
             (expr
-            (term
-                (id)))
-            (expr
-            (term
-                (lit
-                (nat)))))))))
+                (assign_expr
+                (term
+                    (id))
+                (expr
+                    (term
+                    (lit
+                        (nat))))))))))))
 
 ===============
-compound assignment statement
+compound assignment expression
 ===============
 circuit foo(): Bool {
     x += y;
@@ -37,13 +39,15 @@ circuit foo(): Bool {
         (id)))
     (block
         (stmt
-        (assign_stmt
+        (expression_sequence_stmt
+            (expr_seq
             (expr
-            (term
-                (id)))
-            (expr
-            (term
-                (id))))))))
+                (assign_expr
+                (term
+                    (id))
+                (expr
+                    (term
+                    (id)))))))))))
 
 ===============
 expression statement
@@ -114,7 +118,7 @@ circuit foo(): Bool {
 if statement (no else)
 ===============
 circuit foo(): Bool {
-    if (x > 0) x = 1;
+    if (x > 0) { x = 1; }
 }
 ---
 (source_file
@@ -136,14 +140,18 @@ circuit foo(): Bool {
                     (lit
                     (nat))))))
             (stmt
-            (assign_stmt
-                (expr
-                (term
-                    (id)))
-                (expr
-                (term
-                    (lit
-                    (nat)))))))))))
+            (block
+                (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                    (expr
+                        (assign_expr
+                        (term
+                            (id))
+                        (expr
+                            (term
+                            (lit
+                                (nat))))))))))))))))
 
 ===============
 if-else statement
@@ -185,17 +193,19 @@ circuit foo(): Bool {
             (stmt
             (block
                 (stmt
-                (assign_stmt
+                (expression_sequence_stmt
+                    (expr_seq
                     (expr
-                    (term
-                        (id)))
-                    (expr
-                    (term
-                        (lit
-                        (nat)))))))))))))
+                        (assign_expr
+                        (term
+                            (id))
+                        (expr
+                            (term
+                            (lit
+                                (nat))))))))))))))))
 
 ===============
-for statement
+for statement with range
 ===============
 circuit foo(): Bool {
     for (const i of 0 .. 10) { x = i; }
@@ -211,21 +221,62 @@ circuit foo(): Bool {
         (stmt
         (for_stmt
             (id)
-            (nat)
-            (nat)
+            (tsize
+            (nat))
+            (tsize
+            (nat))
             (stmt
             (block
                 (stmt
-                (assign_stmt
+                (expression_sequence_stmt
+                    (expr_seq
                     (expr
-                    (term
-                        (id)))
-                    (expr
-                    (term
-                        (id))))))))))))
+                        (assign_expr
+                        (term
+                            (id))
+                        (expr
+                            (term
+                            (id)))))))))))))))
 
 ===============
-assert statement with message
+for statement with generic parameter range
+===============
+circuit foo<#N>(): Bool {
+    for (const i of 0 .. N) { x = i; }
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (for_stmt
+            (id)
+            (tsize
+            (nat))
+            (tsize
+            (id))
+            (stmt
+            (block
+                (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                    (expr
+                        (assign_expr
+                        (term
+                            (id))
+                        (expr
+                            (term
+                            (id)))))))))))))))
+
+===============
+assert expression
 ===============
 circuit foo(): Bool {
     assert(x != 0, "Division by zero error");
@@ -239,42 +290,20 @@ circuit foo(): Bool {
         (id)))
     (block
         (stmt
-        (assert_stmt
+        (expression_sequence_stmt
+            (expr_seq
             (expr
-            (comparison_expr
                 (term
-                (id))
-                (not_equals)
-                (term
-                (lit
-                    (nat)))))
-            (str))))))
-
-===============
-assert statement without message
-===============
-circuit foo(): Bool {
-    assert(x > 0, "fail!");
-}
----
-(source_file
-    (cdefn
-    (function_name)
-    (type
-        (tref
-        (id)))
-    (block
-        (stmt
-        (assert_stmt
-            (expr
-            (rel_comparison_expr
-                (term
-                (id))
-                (greater_than)
-                (term
-                (lit
-                    (nat)))))
-            (str))))))
+                (assert_term
+                    (expr
+                    (comparison_expr
+                        (term
+                        (id))
+                        (not_equals)
+                        (term
+                        (lit
+                            (nat)))))
+                    (str))))))))))
 
 ===============
 const declaration with type
@@ -292,16 +321,17 @@ circuit foo(): Bool {
     (block
         (stmt
         (const_stmt
+            (cbinding
             (pattern
-            (id))
+                (id))
             (type)
             (expr
-            (bin_sum_expr
+                (bin_sum_expr
                 (term
-                (id))
+                    (id))
                 (term
-                (lit
-                    (nat))))))))))
+                    (lit
+                    (nat)))))))))))
 
 ===============
 const declaration with destructuring pattern
@@ -319,18 +349,51 @@ circuit foo(): Bool {
     (block
         (stmt
         (const_stmt
+            (cbinding
             (pattern
-            (pattern_tuple_elt
+                (pattern_tuple_elt
                 (pattern
-                (id)))
-            (pattern_tuple_elt
+                    (id)))
+                (pattern_tuple_elt
                 (pattern
-                (id))))
+                    (id))))
             (expr
-            (term
+                (term
                 (function_call_term
-                (fun
-                    (id))))))))))
+                    (fun
+                    (id)))))))))))
+
+===============
+const declaration with multiple bindings
+===============
+circuit foo(): Bool {
+    const x = 1, y: Field = 2;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (const_stmt
+            (cbinding
+            (pattern
+                (id))
+            (expr
+                (term
+                (lit
+                    (nat)))))
+            (cbinding
+            (pattern
+                (id))
+            (type)
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
 
 ===============
 block statement
@@ -352,14 +415,16 @@ circuit foo(): Bool {
         (stmt
         (block
             (stmt
-            (assign_stmt
+            (expression_sequence_stmt
+                (expr_seq
                 (expr
-                (term
-                    (id)))
-                (expr
-                (term
-                    (lit
-                    (nat))))))
+                    (assign_expr
+                    (term
+                        (id))
+                    (expr
+                        (term
+                        (lit
+                            (nat)))))))))
             (stmt
             (return_stmt)))))))
 

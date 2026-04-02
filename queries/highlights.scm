@@ -39,6 +39,8 @@
 "assert" @keyword
 "const" @keyword
 "default" @keyword
+"type" @keyword
+"new" @keyword
 "map" @keyword
 "fold" @keyword
 "disclose" @keyword
@@ -75,6 +77,7 @@
 (struct_name) @type
 (enum_name) @type
 (contract_name) @type
+(type_name) @type
 (tvar_name) @type.parameter
 
 ; Types
@@ -125,7 +128,7 @@
 
 ; Function Definitions and Calls
 (cdefn (function_name) @function)
-(edecl (function_name) @function)
 (wdecl (function_name) @function)
+(type_alias_declaration (type_name) @type.definition)
 (ecdecl_circuit (id) @function)
 (fun (id) @function)

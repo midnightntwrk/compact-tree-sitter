@@ -1,0 +1,216 @@
+===============
+structural type alias
+===============
+type U32 = Uint<32>;
+---
+(source_file
+    (type_alias_declaration
+    (type_name)
+    (type
+        (uint_type
+        (tsize
+            (nat))))))
+
+===============
+nominal type alias
+===============
+new type VField = Vector<3, Field>;
+---
+(source_file
+    (type_alias_declaration
+    (type_name)
+    (type
+        (vector_type
+        (tsize
+            (nat))
+        (type)))))
+
+===============
+type alias with generic parameters
+===============
+type V3<T> = Vector<3, T>;
+---
+(source_file
+    (type_alias_declaration
+    (type_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (type
+        (vector_type
+        (tsize
+            (nat))
+        (type
+            (tref
+            (id)))))))
+
+===============
+nominal type alias with numeric generic parameter
+===============
+new type VField<#N> = Vector<N, Field>;
+---
+(source_file
+    (type_alias_declaration
+    (type_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (type
+        (vector_type
+        (tsize
+            (id))
+        (type)))))
+
+===============
+exported type alias
+===============
+export type MyField = Field;
+---
+(source_file
+    (type_alias_declaration
+    (export)
+    (type_name)
+    (type)))
+
+===============
+exported nominal type alias
+===============
+export new type JubjubPoint = Opaque<'JubjubPoint'>;
+---
+(source_file
+    (type_alias_declaration
+    (export)
+    (type_name)
+    (type
+        (opaque_type
+        (str)))))
+
+===============
+for loop with identifier range bounds
+===============
+circuit foo<#N>(): Bool {
+    for (const i of 0 .. N) { x = i; }
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (gparams
+        (generic_param
+        (tvar_name)))
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (for_stmt
+            (id)
+            (tsize
+            (nat))
+            (tsize
+            (id))
+            (stmt
+            (block
+                (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                    (expr
+                        (assign_expr
+                        (term
+                            (id))
+                        (expr
+                            (term
+                            (id)))))))))))))))
+
+===============
+const with multiple bindings
+===============
+circuit foo(): Bool {
+    const x = 1, y: Field = 2, z = 3;
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (const_stmt
+            (cbinding
+            (pattern
+                (id))
+            (expr
+                (term
+                (lit
+                    (nat)))))
+            (cbinding
+            (pattern
+                (id))
+            (type)
+            (expr
+                (term
+                (lit
+                    (nat)))))
+            (cbinding
+            (pattern
+                (id))
+            (expr
+                (term
+                (lit
+                    (nat))))))))))
+
+===============
+assert as expression
+===============
+circuit foo(): Bool {
+    assert(x > 0, "must be positive");
+}
+---
+(source_file
+    (cdefn
+    (function_name)
+    (type
+        (tref
+        (id)))
+    (block
+        (stmt
+        (expression_sequence_stmt
+            (expr_seq
+            (expr
+                (term
+                (assert_term
+                    (expr
+                    (rel_comparison_expr
+                        (term
+                        (id))
+                        (greater_than)
+                        (term
+                        (lit
+                            (nat)))))
+                    (str))))))))))
+
+===============
+type alias inside module
+===============
+module MyModule {
+    type Pair = [Field, Field];
+    export new type Amount = Uint<64>;
+}
+---
+(source_file
+    (mdefn
+    (module_name)
+    (type_alias_declaration
+        (type_name)
+        (type
+        (type)
+        (type)))
+    (type_alias_declaration
+        (export)
+        (type_name)
+        (type
+        (uint_type
+            (tsize
+            (nat)))))))

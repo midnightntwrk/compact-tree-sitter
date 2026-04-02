@@ -150,7 +150,7 @@
     }
   },
   {
-    "type": "assert_stmt",
+    "type": "assert_term",
     "named": true,
     "fields": {
       "condition": {
@@ -176,7 +176,7 @@
     }
   },
   {
-    "type": "assign_stmt",
+    "type": "assign_expr",
     "named": true,
     "fields": {
       "operator": {
@@ -202,7 +202,47 @@
         "required": true,
         "types": [
           {
-            "type": "expr",
+            "type": "and_expr",
+            "named": true
+          },
+          {
+            "type": "bin_mul_expr",
+            "named": true
+          },
+          {
+            "type": "bin_sum_expr",
+            "named": true
+          },
+          {
+            "type": "cast_expr",
+            "named": true
+          },
+          {
+            "type": "comparison_expr",
+            "named": true
+          },
+          {
+            "type": "index_access_expr",
+            "named": true
+          },
+          {
+            "type": "member_access_expr",
+            "named": true
+          },
+          {
+            "type": "not_expr",
+            "named": true
+          },
+          {
+            "type": "or_expr",
+            "named": true
+          },
+          {
+            "type": "rel_comparison_expr",
+            "named": true
+          },
+          {
+            "type": "term",
             "named": true
           }
         ]
@@ -455,6 +495,42 @@
         "types": [
           {
             "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "cbinding",
+    "named": true,
+    "fields": {
+      "pattern": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "pattern",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expr",
             "named": true
           }
         ]
@@ -717,32 +793,12 @@
     "type": "const_stmt",
     "named": true,
     "fields": {
-      "pattern": {
-        "multiple": false,
+      "cbinding": {
+        "multiple": true,
         "required": true,
         "types": [
           {
-            "type": "pattern",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expr",
+            "type": "cbinding",
             "named": true
           }
         ]
@@ -792,7 +848,7 @@
     "fields": {
       "contract_circuit": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "ecdecl_circuit",
@@ -869,76 +925,6 @@
     }
   },
   {
-    "type": "edecl",
-    "named": true,
-    "fields": {
-      "arg": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "arg",
-            "named": true
-          }
-        ]
-      },
-      "args": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "arg",
-            "named": true
-          }
-        ]
-      },
-      "export": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "export",
-            "named": true
-          }
-        ]
-      },
-      "gparams": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "gparams",
-            "named": true
-          }
-        ]
-      },
-      "id": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "function_name",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "enum_name",
     "named": true,
     "fields": {}
@@ -994,6 +980,10 @@
       "types": [
         {
           "type": "and_expr",
+          "named": true
+        },
+        {
+          "type": "assign_expr",
           "named": true
         },
         {
@@ -1090,6 +1080,11 @@
     }
   },
   {
+    "type": "file",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "fold_term",
     "named": true,
     "fields": {
@@ -1164,7 +1159,7 @@
         "required": false,
         "types": [
           {
-            "type": "nat",
+            "type": "tsize",
             "named": true
           }
         ]
@@ -1174,7 +1169,7 @@
         "required": false,
         "types": [
           {
-            "type": "nat",
+            "type": "tsize",
             "named": true
           }
         ]
@@ -1734,10 +1729,6 @@
             "named": true
           },
           {
-            "type": "edecl",
-            "named": true
-          },
-          {
             "type": "enumdef",
             "named": true
           },
@@ -1767,6 +1758,10 @@
           },
           {
             "type": "struct",
+            "named": true
+          },
+          {
+            "type": "type_alias_declaration",
             "named": true
           },
           {
@@ -2463,10 +2458,6 @@
           "named": true
         },
         {
-          "type": "edecl",
-          "named": true
-        },
-        {
           "type": "enumdef",
           "named": true
         },
@@ -2496,6 +2487,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "type_alias_declaration",
           "named": true
         },
         {
@@ -2534,14 +2529,6 @@
       "required": true,
       "types": [
         {
-          "type": "assert_stmt",
-          "named": true
-        },
-        {
-          "type": "assign_stmt",
-          "named": true
-        },
-        {
           "type": "block",
           "named": true
         },
@@ -2567,6 +2554,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "str",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "struct",
@@ -2723,6 +2715,10 @@
           "named": true
         },
         {
+          "type": "assert_term",
+          "named": true
+        },
+        {
           "type": "bytes_literal",
           "named": true
         },
@@ -2853,6 +2849,57 @@
         }
       ]
     }
+  },
+  {
+    "type": "type_alias_declaration",
+    "named": true,
+    "fields": {
+      "export": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "export",
+            "named": true
+          }
+        ]
+      },
+      "gparams": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "gparams",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_name",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "type_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "uint_type",
@@ -3156,10 +3203,6 @@
     "named": false
   },
   {
-    "type": "file",
-    "named": true
-  },
-  {
     "type": "fold",
     "named": false
   },
@@ -3201,6 +3244,10 @@
   },
   {
     "type": "module",
+    "named": false
+  },
+  {
+    "type": "new",
     "named": false
   },
   {
@@ -3248,15 +3295,15 @@
     "named": false
   },
   {
-    "type": "str",
-    "named": true
-  },
-  {
     "type": "struct",
     "named": false
   },
   {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "type",
     "named": false
   },
   {

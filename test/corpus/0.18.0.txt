@@ -682,12 +682,13 @@ circuit foo(v: Vector<10, Uint<8>>): Uint<8> {
     (block
         (stmt
         (const_stmt
+            (cbinding
             (pattern
-            (id))
+                (id))
             (expr
-            (term
+                (term
                 (lit
-                (nat))))))
+                    (nat)))))))
         (stmt
         (return_stmt
             (expr_seq
@@ -765,15 +766,19 @@ circuit foo(): Field {
         (stmt
         (for_stmt
             (id)
-            (nat)
-            (nat)
+            (tsize
+            (nat))
+            (tsize
+            (nat))
             (stmt
             (block
                 (stmt
-                (assign_stmt
+                (expression_sequence_stmt
+                    (expr_seq
                     (expr
-                    (term
-                        (id)))
-                    (expr
-                    (term
-                        (id))))))))))))
+                        (assign_expr
+                        (term
+                            (id))
+                        (expr
+                            (term
+                            (id)))))))))))))))
