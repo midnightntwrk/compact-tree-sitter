@@ -118,7 +118,7 @@ circuit test(): Field {
                 value: (expr
                     (term
                     (lit
-                        (bytes_literal)))))))
+                        (nat)))))))
             stmt: (stmt
             (return_stmt
                 value: (expr_seq

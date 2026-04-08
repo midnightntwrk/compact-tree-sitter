@@ -46,14 +46,16 @@ constructor (x: Field, y: Uint<32>) {
             (nat)))))
     (block
         (stmt
-        (assign_stmt
+        (expression_sequence_stmt
+            (expr_seq
             (expr
-            (term
-                (id)))
-            (expr
-            (term
-                (lit
-                (nat)))))))))
+                (assign_expr
+                (term
+                    (id))
+                (expr
+                (term
+                    (lit
+                    (nat))))))))))))
 
 ===============
 constructor with two parameters and trailing comma
@@ -77,14 +79,16 @@ constructor (x: Field, y: Uint<32>,) {
             (nat)))))
     (block
         (stmt
-        (assign_stmt
+        (expression_sequence_stmt
+            (expr_seq
             (expr
-            (term
-                (id)))
-            (expr
-            (term
-                (lit
-                (nat)))))))))
+                (assign_expr
+                (term
+                    (id))
+                (expr
+                (term
+                    (lit
+                    (nat))))))))))))
 
 ===============
 constructor with two parameters and a block with if statement
@@ -132,11 +136,13 @@ constructor (
             (stmt
             (block
                 (stmt
-                (assign_stmt
+                (expression_sequence_stmt
+                    (expr_seq
                     (expr
-                    (term
-                        (id)))
-                    (expr
-                    (term
-                        (lit
-                        (nat)))))))))))))
+                        (assign_expr
+                        (term
+                            (id))
+                        (expr
+                        (term
+                            (lit
+                            (nat))))))))))))))))

@@ -122,7 +122,7 @@ type Pair<T> = Vector<2, T>;
                     (nat))
                 type: (type
                     (tref
-                    (id)))))))
+                    id: (id)))))))
 
 ===============
 Generic size type alias
