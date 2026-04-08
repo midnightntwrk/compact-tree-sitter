@@ -6,6 +6,7 @@
 
 <!-- Please check all the boxes that apply to your pull request. -->
 
+- [ ] All commits are signed off (`git commit -s`) for the [DCO](https://developercertificate.org/)
 - [ ] Useful pull request description
 - [ ] Tests are provided (if possible)
 - [ ] Key commits have useful messages
