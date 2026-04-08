@@ -1,0 +1,161 @@
+===============
+Structural type alias
+===============
+
+type U32 = Uint<32>;
+
+---
+
+(source_file
+    (type_alias_declaration
+        name: (type_name)
+        type: (type
+            (uint_type
+                tsize: (tsize
+                    (nat))))))
+
+===============
+Nominal type alias
+===============
+
+new type Amount = Uint<64>;
+
+---
+
+(source_file
+    (type_alias_declaration
+        name: (type_name)
+        type: (type
+            (uint_type
+                tsize: (tsize
+                    (nat))))))
+
+===============
+Type alias with Field
+===============
+
+type MyField = Field;
+
+---
+
+(source_file
+    (type_alias_declaration
+        name: (type_name)
+        type: (type)))
+
+===============
+Type alias with Boolean
+===============
+
+type Flag = Boolean;
+
+---
+
+(source_file
+    (type_alias_declaration
+        name: (type_name)
+        type: (type)))
+
+===============
+Exported type alias
+===============
+
+export type MyField = Field;
+
+---
+
+(source_file
+    (type_alias_declaration
+        export: (export)
+        name: (type_name)
+        type: (type)))
+
+===============
+Exported nominal type alias
+===============
+
+export new type TokenId = Bytes<32>;
+
+---
+
+(source_file
+    (type_alias_declaration
+        export: (export)
+        name: (type_name)
+        type: (type
+            (bytes_type
+                tsize: (tsize
+                    (nat))))))
+
+===============
+Type alias with Opaque
+===============
+
+type Point = Opaque<'JubjubPoint'>;
+
+---
+
+(source_file
+    (type_alias_declaration
+        name: (type_name)
+        type: (type
+            (opaque_type
+            (str)))))
+
+===============
+Generic type alias with type parameter
+===============
+
+type Pair<T> = Vector<2, T>;
+
+---
+
+(source_file
+    (type_alias_declaration
+        name: (type_name)
+        gparams: (gparams
+            gparam: (generic_param
+            (tvar_name)))
+        type: (type
+            (vector_type
+                tsize: (tsize
+                    (nat))
+                type: (type
+                    (tref
+                    (id)))))))
+
+===============
+Generic size type alias
+===============
+
+type FixedVec<#N> = Vector<N, Field>;
+
+---
+
+(source_file
+    (type_alias_declaration
+        name: (type_name)
+        gparams: (gparams
+            gparam: (generic_param
+            (tvar_name)))
+        type: (type
+            (vector_type
+                tsize: (tsize
+                    (id))
+                type: (type)))))
+
+===============
+Type alias with Bytes
+===============
+
+type Hash = Bytes<32>;
+
+---
+
+(source_file
+    (type_alias_declaration
+        name: (type_name)
+        type: (type
+            (bytes_type
+                tsize: (tsize
+                    (nat))))))

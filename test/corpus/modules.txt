@@ -1,0 +1,155 @@
+===============
+Simple module
+===============
+
+module MyModule {
+}
+
+---
+
+(source_file
+    (mdefn
+        name: (module_name)))
+
+===============
+Module with export
+===============
+
+export module MyModule {
+}
+
+---
+
+(source_file
+    (mdefn
+        export: (export)
+        name: (module_name)))
+
+===============
+Module with generic type parameter
+===============
+
+module Container<T> {
+}
+
+---
+
+(source_file
+    (mdefn
+        name: (module_name)
+        gparams: (gparams
+            gparam: (generic_param
+            (tvar_name)))))
+
+===============
+Module with size generic parameter
+===============
+
+module Fixed<#N> {
+}
+
+---
+
+(source_file
+    (mdefn
+        name: (module_name)
+        gparams: (gparams
+            gparam: (generic_param
+            (tvar_name)))))
+
+===============
+Module with struct content
+===============
+
+module Token {
+    struct Balance {
+        amount: Field;
+    }
+}
+
+---
+
+(source_file
+    (mdefn
+        name: (module_name)
+        module_element: (struct
+            name: (struct_name)
+            arg: (arg
+                id: (id)
+                type: (type)))))
+
+===============
+Module with ledger declaration
+===============
+
+module Wallet {
+    ledger balance: Field;
+}
+
+---
+
+(source_file
+    (mdefn
+        name: (module_name)
+        module_element: (ldecl
+            name: (id)
+            type: (type))))
+
+===============
+Module with circuit definition
+===============
+
+module Math {
+    circuit add(a: Field, b: Field): Field {
+        return a + b;
+    }
+}
+
+---
+
+(source_file
+    (mdefn
+        name: (module_name)
+        module_element: (cdefn
+            id: (function_name)
+            parg: (parg
+                pattern: (pattern
+                    id: (id))
+                type: (type))
+            parg: (parg
+                pattern: (pattern
+                    id: (id))
+                type: (type))
+            type: (type)
+            body: (block
+                stmt: (stmt
+                    (return_stmt
+                        value: (expr_seq
+                        expr: (expr
+                            (bin_sum_expr
+                                left: (term
+                                    (id))
+                                right: (term
+                                    (id)))))))))))
+
+===============
+Exported module with multiple elements
+===============
+
+export module Tokens {
+    ledger supply: Field;
+    ledger owner: Field;
+}
+
+---
+
+(source_file
+    (mdefn
+        export: (export)
+        name: (module_name)
+        module_element: (ldecl
+            name: (id)
+            type: (type))
+        module_element: (ldecl
+            name: (id)
+            type: (type))))
