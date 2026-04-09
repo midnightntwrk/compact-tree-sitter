@@ -103,9 +103,15 @@ bindings/                # language bindings (C, Go, Node, Python, Rust, Swift)
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-### CLA Assistant
+### DCO Sign-Off
 
-The Midnight Foundation appreciates contributions, and like many other open source projects asks contributors to sign a Contributor License Agreement before accepting contributions. We use [CLA assistant](https://github.com/cla-assistant/cla-assistant) to streamline the CLA signing process, enabling contributors to sign our CLAs directly within a GitHub pull request.
+This project uses a [Developer Certificate of Origin](https://developercertificate.org/) (DCO) instead of a CLA. All commits must include a `Signed-off-by` trailer certifying that you have the right to submit the contribution under the project's license:
+
+```
+Signed-off-by: Your Name <your.email@example.com>
+```
+
+Use `git commit -s` to add this automatically.
 
 ## License
 
