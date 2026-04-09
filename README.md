@@ -64,11 +64,9 @@ println!("{}", tree.root_node().to_sexp());
 
 ## Installation
 
-This package is not yet published to npm or crates.io. Install from git:
-
 ```bash
 # Node.js
-npm install github:midnightntwrk/compact-tree-sitter
+npm install @midnight-ntwrk/compact-tree-sitter
 
 # Rust (add to Cargo.toml)
 # tree-sitter-compact = { git = "https://github.com/midnightntwrk/compact-tree-sitter" }
