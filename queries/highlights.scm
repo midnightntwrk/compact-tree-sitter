@@ -54,8 +54,8 @@
 "-=" @operator
 (equals) @operator
 (not_equals) @operator
-">" @operator
-"<" @operator
+(greater_than) @operator
+(less_than) @operator
 (greater_than_or_equal) @operator
 (less_than_or_equal) @operator
 (not) @operator
@@ -115,16 +115,12 @@
 (pragma (id) @property)
 (import_name (id) @namespace)
 (gargs (_) @type.parameter)
-(struct_named_filed_initializer (id) @field)
+(struct_named_field_initializer (id) @field)
 (pattern_struct_elt (id) @field)
-(member_access_expr (id) @function.call)
+(member_access_expr member: (id) @property)
 
 ; Function Definitions and Calls
 (cdefn (function_name) @function)
 (wdecl (function_name) @function)
 (ecdecl_circuit (id) @function)
 (fun (id) @function)
-
-; Special terms
-(assert_term) @keyword
-(bytes_literal) @constructor

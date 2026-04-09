@@ -2576,7 +2576,7 @@
     "fields": {
       "arg": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "arg",
@@ -2629,7 +2629,7 @@
           "named": true
         },
         {
-          "type": "struct_named_filed_initializer",
+          "type": "struct_named_field_initializer",
           "named": true
         },
         {
@@ -2645,7 +2645,7 @@
     "fields": {}
   },
   {
-    "type": "struct_named_filed_initializer",
+    "type": "struct_named_field_initializer",
     "named": true,
     "fields": {
       "expr": {
@@ -2971,20 +2971,6 @@
         "multiple": true,
         "required": false,
         "types": [
-          {
-            "type": "arg",
-            "named": true
-          }
-        ]
-      },
-      "args": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ",",
-            "named": false
-          },
           {
             "type": "arg",
             "named": true

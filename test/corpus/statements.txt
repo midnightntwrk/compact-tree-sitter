@@ -276,7 +276,7 @@ circuit foo(): Bool {
                   (str))))))))))
 
 ===============
-assert statement without message
+assert statement with comparison
 ===============
 circuit foo(): Bool {
     assert(x > 0, "fail!");
@@ -686,13 +686,13 @@ circuit foo(): Bool {
                   (tref
                     (id))
                   (struct_arg
-                    (struct_named_filed_initializer
+                    (struct_named_field_initializer
                       (id)
                       (expr
                         (term
                           (id)))))
                   (struct_arg
-                    (struct_named_filed_initializer
+                    (struct_named_field_initializer
                       (id)
                       (expr
                         (term
@@ -1154,6 +1154,48 @@ circuit foo(): Field {
               (term
                 (lit
                   (nat)))))))
+      (stmt
+        (return_stmt
+          (expr_seq
+            (expr
+              (term
+                (id)))))))))
+
+===============
+for statement with expression limit
+===============
+circuit foo(): Field {
+    for (const i of items) {
+        x = i;
+    }
+    return x;
+}
+---
+
+(source_file
+  (cdefn
+    (function_name)
+    (type)
+    (block
+      (stmt
+        (for_stmt
+          (id)
+          (expr_seq
+            (expr
+              (term
+                (id))))
+          (stmt
+            (block
+              (stmt
+                (expression_sequence_stmt
+                  (expr_seq
+                    (expr
+                      (assign_expr
+                        (term
+                          (id))
+                        (expr
+                          (term
+                            (id))))))))))))
       (stmt
         (return_stmt
           (expr_seq

@@ -285,7 +285,7 @@ module.exports = grammar({
         field("id", $.function_name),
         optional(field("gparams", $.gparams)),
         "(",
-        field("args", commaSep(field("arg", $.arg))),
+        commaSep(field("arg", $.arg)),
         ")",
         ":",
         field("type", $.type),
@@ -346,11 +346,11 @@ module.exports = grammar({
 
     // { arg ; … ; arg ;^opt }
     _struct_body_semicolon: ($) =>
-      seq("{", repeat(seq(field("arg", $.arg), ";")), optional(";"), "}"),
+      seq("{", field("arg", $.arg), repeat(seq(";", field("arg", $.arg))), optional(";"), "}"),
 
     // { arg , … , arg ,^opt }
     _struct_body_comma: ($) =>
-      prec(1, seq("{", repeat(seq(field("arg", $.arg), ",")), optional(","), "}")),
+      prec(1, seq("{", commaSep1(field("arg", $.arg)), "}")),
 
     // Enum-definition (enumdef)
     //
@@ -726,11 +726,11 @@ module.exports = grammar({
     struct_arg: ($) =>
       choice(
         $.expr,
-        $.struct_named_filed_initializer,
+        $.struct_named_field_initializer,
         $.struct_update_field
       ),
 
-    struct_named_filed_initializer: ($) => seq(field("id", $.id), ":", field("expr", $.expr)),
+    struct_named_field_initializer: ($) => seq(field("id", $.id), ":", field("expr", $.expr)),
     struct_update_field: ($) => seq("...", field("expr", $.expr)),
 
     // Function (fun)
@@ -824,7 +824,7 @@ function commaSep1(rule) {
 /**
  * Creates a rule for zero or more comma-separated occurrences of another rule
  * @param {Rule} rule - The rule to be repeated
- * @returns {ChoiceRule} A rule that matches one or more occurrences of the input rule separated by commas
+ * @returns {ChoiceRule} A rule that matches zero or more occurrences of the input rule separated by commas
  */
 function commaSep(rule) {
   return optional(seq(rule, repeat(seq(",", rule)), optional(",")));
