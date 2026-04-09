@@ -1,0 +1,296 @@
+===============
+bytes literal
+===============
+
+circuit test(): Field {
+    const x = Bytes[0xFF, 0x00];
+    return x;
+}
+
+---
+
+(source_file
+  (cdefn
+    id: (function_name)
+    type: (type)
+    body: (block
+      stmt: (stmt
+        (const_stmt
+          (cbinding
+            pattern: (pattern
+              id: (id))
+            value: (expr
+              (term
+                (bytes_literal
+                  expr: (expr
+                    (term
+                      (lit
+                        (nat))))
+                  expr: (expr
+                    (term
+                      (lit
+                        (nat))))))))))
+      stmt: (stmt
+        (return_stmt
+          value: (expr_seq
+            expr: (expr
+              (term
+                (id)))))))))
+
+===============
+bytes literal with spread
+===============
+
+circuit test(): Field {
+    const x = Bytes[...a, ...b];
+    return x;
+}
+
+---
+
+(source_file
+  (cdefn
+    id: (function_name)
+    type: (type)
+    body: (block
+      stmt: (stmt
+        (const_stmt
+          (cbinding
+            pattern: (pattern
+              id: (id))
+            value: (expr
+              (term
+                (bytes_literal
+                  (spread_element
+                    expr: (expr
+                      (term
+                        (id))))
+                  (spread_element
+                    expr: (expr
+                      (term
+                        (id))))))))))
+      stmt: (stmt
+        (return_stmt
+          value: (expr_seq
+            expr: (expr
+              (term
+                (id)))))))))
+
+===============
+array literal with spread
+===============
+
+circuit test(): Field {
+    const x = [...a, 1, ...b];
+    return x;
+}
+
+---
+
+(source_file
+  (cdefn
+    id: (function_name)
+    type: (type)
+    body: (block
+      stmt: (stmt
+        (const_stmt
+          (cbinding
+            pattern: (pattern
+              id: (id))
+            value: (expr
+              (term
+                (array_literal
+                  (spread_element
+                    expr: (expr
+                      (term
+                        (id))))
+                  expr: (expr
+                    (term
+                      (lit
+                        (nat))))
+                  (spread_element
+                    expr: (expr
+                      (term
+                        (id))))))))))
+      stmt: (stmt
+        (return_stmt
+          value: (expr_seq
+            expr: (expr
+              (term
+                (id)))))))))
+
+===============
+slice expression
+===============
+
+circuit test(): Field {
+    const x = slice<4>(b, 2);
+    return x;
+}
+
+---
+
+(source_file
+  (cdefn
+    id: (function_name)
+    type: (type)
+    body: (block
+      stmt: (stmt
+        (const_stmt
+          (cbinding
+            pattern: (pattern
+              id: (id))
+            value: (expr
+              (term
+                (slice_term
+                  size: (tsize
+                    (nat))
+                  value: (expr
+                    (term
+                      (id)))
+                  index: (expr
+                    (term
+                      (lit
+                        (nat))))))))))
+      stmt: (stmt
+        (return_stmt
+          value: (expr_seq
+            expr: (expr
+              (term
+                (id)))))))))
+
+===============
+empty array literal
+===============
+
+circuit test(): Field {
+    const x = [];
+    return x;
+}
+
+---
+
+(source_file
+  (cdefn
+    (function_name)
+    (type)
+    (block
+      (stmt
+        (const_stmt
+          (cbinding
+            (pattern
+              (id))
+            (expr
+              (term
+                (array_literal))))))
+      (stmt
+        (return_stmt
+          (expr_seq
+            (expr
+              (term
+                (id)))))))))
+
+===============
+empty bytes literal
+===============
+
+circuit test(): Field {
+    const x = Bytes[];
+    return x;
+}
+
+---
+
+(source_file
+  (cdefn
+    (function_name)
+    (type)
+    (block
+      (stmt
+        (const_stmt
+          (cbinding
+            (pattern
+              (id))
+            (expr
+              (term
+                (bytes_literal))))))
+      (stmt
+        (return_stmt
+          (expr_seq
+            (expr
+              (term
+                (id)))))))))
+
+===============
+array literal with trailing comma
+===============
+
+circuit test(): Field {
+    const x = [1, 2,];
+    return x;
+}
+
+---
+
+(source_file
+  (cdefn
+    (function_name)
+    (type)
+    (block
+      (stmt
+        (const_stmt
+          (cbinding
+            (pattern
+              (id))
+            (expr
+              (term
+                (array_literal
+                  (expr
+                    (term
+                      (lit
+                        (nat))))
+                  (expr
+                    (term
+                      (lit
+                        (nat))))))))))
+      (stmt
+        (return_stmt
+          (expr_seq
+            (expr
+              (term
+                (id)))))))))
+
+===============
+bytes literal with trailing comma
+===============
+
+circuit test(): Field {
+    const x = Bytes[0xFF,];
+    return x;
+}
+
+---
+
+(source_file
+  (cdefn
+    (function_name)
+    (type)
+    (block
+      (stmt
+        (const_stmt
+          (cbinding
+            (pattern
+              (id))
+            (expr
+              (term
+                (bytes_literal
+                  (expr
+                    (term
+                      (lit
+                        (nat))))))))))
+      (stmt
+        (return_stmt
+          (expr_seq
+            (expr
+              (term
+                (id)))))))))

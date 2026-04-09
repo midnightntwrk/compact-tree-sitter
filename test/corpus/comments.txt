@@ -1,0 +1,102 @@
+===============
+Line comment
+===============
+
+// this is a comment
+
+---
+
+(source_file
+    (comment))
+
+===============
+Block comment single line
+===============
+
+/* block comment */
+
+---
+
+(source_file
+    (comment))
+
+===============
+Block comment multi-line
+===============
+
+/*
+ * multi-line
+ * block comment
+ */
+
+---
+
+(source_file
+    (comment))
+
+===============
+Block comment with code
+===============
+
+/* comment */ ledger x: Field;
+
+---
+
+(source_file
+    (comment)
+    (ldecl
+        name: (id)
+        type: (type)))
+
+===============
+Line comment after declaration
+===============
+
+ledger counter: Field; // the counter
+
+---
+
+(source_file
+    (ldecl
+        name: (id)
+        type: (type))
+    (comment))
+
+===============
+Multiple line comments
+===============
+
+// first comment
+// second comment
+// third comment
+
+---
+
+(source_file
+    (comment)
+    (comment)
+    (comment))
+
+===============
+Line comment inside circuit body
+===============
+
+circuit foo(): Field {
+    // this is a comment inside a circuit
+    return x;
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            (comment)
+            stmt: (stmt
+            (return_stmt
+                value: (expr_seq
+                expr: (expr
+                    (term
+                    (id)))))))))

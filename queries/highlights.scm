@@ -1,5 +1,5 @@
 ; This file is part of compact-tree-sitter.
-; Copyright (C) 2025 Midnight Foundation
+; Copyright (C) Midnight Foundation
 ; SPDX-License-Identifier: Apache-2.0
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; You may not use this file except in compliance with the License.
@@ -43,6 +43,10 @@
 "fold" @keyword
 "disclose" @keyword
 "pad" @keyword
+"type" @keyword
+"new" @keyword
+"from" @keyword
+"slice" @keyword
 
 ; Operators
 "=" @operator
@@ -50,8 +54,8 @@
 "-=" @operator
 (equals) @operator
 (not_equals) @operator
-">" @operator
-"<" @operator
+(greater_than) @operator
+(less_than) @operator
 (greater_than_or_equal) @operator
 (less_than_or_equal) @operator
 (not) @operator
@@ -76,6 +80,7 @@
 (enum_name) @type
 (contract_name) @type
 (tvar_name) @type.parameter
+(type_name) @type
 
 ; Types
 (tref (id) @type)
@@ -110,13 +115,12 @@
 (pragma (id) @property)
 (import_name (id) @namespace)
 (gargs (_) @type.parameter)
-(struct_named_filed_initializer (id) @field)
+(struct_named_field_initializer (id) @field)
 (pattern_struct_elt (id) @field)
-(term (expr "." (id) @function.call (expr) @parameter))
+(member_access_expr member: (id) @property)
 
 ; Function Definitions and Calls
 (cdefn (function_name) @function)
-(edecl (function_name) @function)
 (wdecl (function_name) @function)
 (ecdecl_circuit (id) @function)
 (fun (id) @function)

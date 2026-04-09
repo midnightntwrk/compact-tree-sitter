@@ -95,3 +95,25 @@ export contract MyContract {
             (tsize
                 (nat)))))
         (type))))
+
+===============
+comma-separated contract body
+===============
+contract MyContract {
+    circuit foo(): Field,
+    pure circuit bar(a: Field): Field
+}
+---
+(source_file
+    (ecdecl
+    (contract_name)
+    (ecdecl_circuit
+        (id)
+        (type))
+    (ecdecl_circuit
+        (pure)
+        (id)
+        (arg
+        (id)
+        (type))
+        (type))))

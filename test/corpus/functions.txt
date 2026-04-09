@@ -1,0 +1,251 @@
+===============
+Lambda with expression body in map
+===============
+
+circuit test(): Field {
+    map((x) => x, v);
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                        expr: (expr
+                            (term
+                                (map_term
+                                    fun: (fun
+                                        pattern: (pattern
+                                            id: (id))
+                                        expr: (expr
+                                            (term
+                                                (id))))
+                                    expr: (expr
+                                        (term
+                                            (id))))))))))))
+
+===============
+Lambda with typed parameter
+===============
+
+circuit test(): Field {
+    map((x: Field) => x, v);
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                        expr: (expr
+                            (term
+                                (map_term
+                                    fun: (fun
+                                        parg: (parg
+                                            pattern: (pattern
+                                                id: (id))
+                                            type: (type))
+                                        expr: (expr
+                                            (term
+                                                (id))))
+                                    expr: (expr
+                                        (term
+                                            (id))))))))))))
+
+===============
+Lambda with block body
+===============
+
+circuit test(): Field {
+    map((x) => { return x; }, v);
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                        expr: (expr
+                            (term
+                                (map_term
+                                    fun: (fun
+                                        pattern: (pattern
+                                            id: (id))
+                                        block: (block
+                                            stmt: (stmt
+                                                (return_stmt
+                                                    value: (expr_seq
+                                                        expr: (expr
+                                                            (term
+                                                                (id))))))))
+                                    expr: (expr
+                                        (term
+                                            (id))))))))))))
+
+===============
+Lambda with return type annotation
+===============
+
+circuit test(): Field {
+    map((x): Field => x, v);
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                        expr: (expr
+                            (term
+                                (map_term
+                                    fun: (fun
+                                        pattern: (pattern
+                                            id: (id))
+                                        return: (type)
+                                        expr: (expr
+                                            (term
+                                                (id))))
+                                    expr: (expr
+                                        (term
+                                            (id))))))))))))
+
+===============
+Method chaining
+===============
+
+circuit test(): Field {
+    x.foo().bar(z);
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                        expr: (expr
+                            (member_access_expr
+                                base: (member_access_expr
+                                    base: (term
+                                        (id))
+                                    member: (id))
+                                member: (id)
+                                expr: (expr
+                                    (term
+                                        (id)))))))))))
+
+===============
+Generic function call
+===============
+
+circuit test(): Field {
+    myFn<Field>(x);
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                        expr: (expr
+                            (term
+                                (function_call_term
+                                    fun: (fun
+                                        id: (id)
+                                        gargs: (gargs
+                                            garg: (garg
+                                                (type))))
+                                    expr: (expr
+                                        (term
+                                            (id))))))))))))
+
+===============
+Fold with lambda
+===============
+
+circuit test(): Field {
+    fold((acc, x) => acc + x, 0, v);
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                        expr: (expr
+                            (term
+                                (fold_term
+                                    fun: (fun
+                                        pattern: (pattern
+                                            id: (id))
+                                        pattern: (pattern
+                                            id: (id))
+                                        expr: (expr
+                                            (bin_sum_expr
+                                                left: (term
+                                                    (id))
+                                                right: (term
+                                                    (id)))))
+                                    init_value: (expr
+                                        (term
+                                            (lit
+                                                (nat))))
+                                    expr: (expr
+                                        (term
+                                            (id))))))))))))
+
+===============
+Identifier with dollar prefix
+===============
+
+circuit test(): Field {
+    $myVar;
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+                (expression_sequence_stmt
+                    (expr_seq
+                        expr: (expr
+                            (term
+                                (id)))))))))

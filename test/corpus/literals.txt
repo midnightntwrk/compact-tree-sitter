@@ -1,0 +1,255 @@
+===============
+Hexadecimal literal
+===============
+
+circuit test(): Field {
+    const x = 0xFF;
+    return x;
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+            (const_stmt
+                (cbinding
+                pattern: (pattern
+                    id: (id))
+                value: (expr
+                    (term
+                    (lit
+                        (nat)))))))
+            stmt: (stmt
+            (return_stmt
+                value: (expr_seq
+                expr: (expr
+                    (term
+                    (id)))))))))
+
+===============
+Octal literal
+===============
+
+circuit test(): Field {
+    const x = 0o377;
+    return x;
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+            (const_stmt
+                (cbinding
+                pattern: (pattern
+                    id: (id))
+                value: (expr
+                    (term
+                    (lit
+                        (nat)))))))
+            stmt: (stmt
+            (return_stmt
+                value: (expr_seq
+                expr: (expr
+                    (term
+                    (id)))))))))
+
+===============
+Binary literal
+===============
+
+circuit test(): Field {
+    const x = 0b1010;
+    return x;
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+            (const_stmt
+                (cbinding
+                pattern: (pattern
+                    id: (id))
+                value: (expr
+                    (term
+                    (lit
+                        (nat)))))))
+            stmt: (stmt
+            (return_stmt
+                value: (expr_seq
+                expr: (expr
+                    (term
+                    (id)))))))))
+
+===============
+Bytes literal
+===============
+
+circuit test(): Field {
+    const x = 0x0102030405060708090a0b0c0d0e0f10;
+    return x;
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+            (const_stmt
+                (cbinding
+                pattern: (pattern
+                    id: (id))
+                value: (expr
+                    (term
+                    (lit
+                        (nat)))))))
+            stmt: (stmt
+            (return_stmt
+                value: (expr_seq
+                expr: (expr
+                    (term
+                    (id)))))))))
+
+===============
+Single-quoted string in Opaque type
+===============
+
+ledger x: Opaque<'JubjubPoint'>;
+
+---
+
+(source_file
+    (ldecl
+        name: (id)
+        type: (type
+            (opaque_type
+            (str)))))
+
+===============
+Hex in arithmetic expression
+===============
+
+circuit test(): Field {
+    const x = 0xFF + 0b1010;
+    return x;
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+            (const_stmt
+                (cbinding
+                pattern: (pattern
+                    id: (id))
+                value: (expr
+                    (bin_sum_expr
+                    left: (term
+                        (lit
+                        (nat)))
+                    right: (term
+                        (lit
+                        (nat))))))))
+            stmt: (stmt
+            (return_stmt
+                value: (expr_seq
+                expr: (expr
+                    (term
+                    (id)))))))))
+
+===============
+Decimal zero literal
+===============
+
+circuit test(): Field {
+    const x = 0;
+    return x;
+}
+
+---
+
+(source_file
+    (cdefn
+        id: (function_name)
+        type: (type)
+        body: (block
+            stmt: (stmt
+            (const_stmt
+                (cbinding
+                pattern: (pattern
+                    id: (id))
+                value: (expr
+                    (term
+                    (lit
+                        (nat)))))))
+            stmt: (stmt
+            (return_stmt
+                value: (expr_seq
+                expr: (expr
+                    (term
+                    (id)))))))))
+
+===============
+Escaped double-quote string
+===============
+
+ledger x: Opaque<"hello \"world\"">;
+
+---
+
+(source_file
+    (ldecl
+        name: (id)
+        type: (type
+            (opaque_type
+            (str)))))
+
+===============
+Escaped single-quote string
+===============
+
+ledger x: Opaque<'bob\'s fish'>;
+
+---
+
+(source_file
+    (ldecl
+        name: (id)
+        type: (type
+            (opaque_type
+            (str)))))
+
+===============
+Escape sequences in string
+===============
+
+ledger x: Opaque<"\n\t\r\0">;
+
+---
+
+(source_file
+    (ldecl
+        name: (id)
+        type: (type
+            (opaque_type
+            (str)))))

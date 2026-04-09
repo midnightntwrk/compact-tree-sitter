@@ -19,7 +19,7 @@ license.text = "Apache"
 readme = "README.md"
 
 [project.urls]
-Homepage = "https://github.com/midnight-ntwrk/tree-sitter-compact"
+Homepage = "https://github.com/midnightntwrk/compact-tree-sitter"
 
 [project.optional-dependencies]
 core = ["tree-sitter~=0.24"]
