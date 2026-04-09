@@ -208,3 +208,48 @@ circuit test(): Field {
                 expr: (expr
                     (term
                     (id)))))))))
+
+===============
+Escaped double-quote string
+===============
+
+ledger x: Opaque<"hello \"world\"">;
+
+---
+
+(source_file
+    (ldecl
+        name: (id)
+        type: (type
+            (opaque_type
+            (str)))))
+
+===============
+Escaped single-quote string
+===============
+
+ledger x: Opaque<'bob\'s fish'>;
+
+---
+
+(source_file
+    (ldecl
+        name: (id)
+        type: (type
+            (opaque_type
+            (str)))))
+
+===============
+Escape sequences in string
+===============
+
+ledger x: Opaque<"\n\t\r\0">;
+
+---
+
+(source_file
+    (ldecl
+        name: (id)
+        type: (type
+            (opaque_type
+            (str)))))

@@ -2894,6 +2894,16 @@
           }
         ]
       },
+      "nominal": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "new",
+            "named": false
+          }
+        ]
+      },
       "type": {
         "multiple": false,
         "required": true,

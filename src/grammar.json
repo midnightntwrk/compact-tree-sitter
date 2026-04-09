@@ -1785,8 +1785,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "STRING",
-              "value": "new"
+              "type": "FIELD",
+              "name": "nominal",
+              "content": {
+                "type": "STRING",
+                "value": "new"
+              }
             },
             {
               "type": "BLANK"
@@ -4509,11 +4513,11 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "\"[^\"]*\""
+            "value": "\"([^\"\\\\]|\\\\.)*\""
           },
           {
             "type": "PATTERN",
-            "value": "'[^']*'"
+            "value": "'([^'\\\\]|\\\\.)*'"
           }
         ]
       }
@@ -4525,11 +4529,11 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "\"[^\"]*\""
+            "value": "\"([^\"\\\\]|\\\\.)*\""
           },
           {
             "type": "PATTERN",
-            "value": "'[^']*'"
+            "value": "'([^'\\\\]|\\\\.)*'"
           }
         ]
       }

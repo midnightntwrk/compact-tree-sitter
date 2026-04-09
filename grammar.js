@@ -372,7 +372,7 @@ module.exports = grammar({
     // type_alias_declaration → export^opt new^opt type type-name gparams^opt = type ;
     type_alias_declaration: ($) => seq(
       optional(field("export", $.export)),
-      optional("new"),
+      optional(field("nominal", "new")),
       "type",
       field("name", $.type_name),
       optional(field("gparams", $.gparams)),
@@ -797,8 +797,8 @@ module.exports = grammar({
     // string-literal (str, file)
     //
     // supports both double-quoted and single-quoted strings
-    str: ($) => token(choice(/"[^"]*"/, /'[^']*'/)),
-    file: ($) => token(choice(/"[^"]*"/, /'[^']*'/)),
+    str: ($) => token(choice(/"([^"\\]|\\.)*"/, /'([^'\\]|\\.)*'/)),
+    file: ($) => token(choice(/"([^"\\]|\\.)*"/, /'([^'\\]|\\.)*'/)),
 
     // version-literal (version)
     //

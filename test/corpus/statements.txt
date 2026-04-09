@@ -1085,3 +1085,78 @@ circuit foo(): Bool {
                 (term
                   (id))
                 (type)))))))))
+
+===============
+multi-binding const
+===============
+circuit foo(): Field {
+    const x = 1, y = 2;
+    return x;
+}
+---
+
+(source_file
+  (cdefn
+    (function_name)
+    (type)
+    (block
+      (stmt
+        (const_stmt
+          (cbinding
+            (pattern
+              (id))
+            (expr
+              (term
+                (lit
+                  (nat)))))
+          (cbinding
+            (pattern
+              (id))
+            (expr
+              (term
+                (lit
+                  (nat)))))))
+      (stmt
+        (return_stmt
+          (expr_seq
+            (expr
+              (term
+                (id)))))))))
+
+===============
+multi-binding const with type annotation
+===============
+circuit foo(): Field {
+    const a = 1, b: Field = 2;
+    return a;
+}
+---
+
+(source_file
+  (cdefn
+    (function_name)
+    (type)
+    (block
+      (stmt
+        (const_stmt
+          (cbinding
+            (pattern
+              (id))
+            (expr
+              (term
+                (lit
+                  (nat)))))
+          (cbinding
+            (pattern
+              (id))
+            (type)
+            (expr
+              (term
+                (lit
+                  (nat)))))))
+      (stmt
+        (return_stmt
+          (expr_seq
+            (expr
+              (term
+                (id)))))))))
