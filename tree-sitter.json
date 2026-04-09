@@ -25,7 +25,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/midnight-ntwrk/tree-sitter-compact"
+      "repository": "https://github.com/midnightntwrk/compact-tree-sitter"
     }
   },
   "bindings": {
